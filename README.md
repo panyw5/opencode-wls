@@ -69,10 +69,25 @@ OpenCode 扩展（`local.wls-repl`）：为 `.wls` 文件提供 Python REPL/pdb 
 opencode 构建需包含扩展系统（extensions 分支），本机需有 `wolframscript`：
 
 ```bash
-opencode extension install https://raw.githubusercontent.com/panyw5/opencode-wls/main/stable.json --yes --allow-registry-upgrade --enable
+opencode extension install --release \
+  https://raw.githubusercontent.com/panyw5/opencode-wls/main/stable.json \
+  --yes --allow-registry-upgrade --enable
 ```
 
-`stable.json` 指向本仓库 [releases](https://github.com/panyw5/opencode-wls/releases) 中对应版本的归档及 SHA-256；首次从 release 源安装会把扩展 registry 原子升级到 v3（`--allow-registry-upgrade` 为人工声明旧进程已停机，不是机器证明；卸载不会降级）。
+`--release` 标志必需（否则 URL 被当作归档直链校验）。`stable.json` 指向本仓库
+[releases](https://github.com/panyw5/opencode-wls/releases) 中对应版本的归档及 SHA-256；
+首次从 release 源安装会把扩展 registry 原子升级到 v3（`--allow-registry-upgrade` 为人工
+声明旧进程已停机，不是机器证明；卸载不会降级）。
+
+**已知网络边界**：下载器会校验 DNS 解析结果必须是公网地址。使用 fake-IP 模式代理
+（DNS 返回 198.18.0.0/15）的网络会被正确拒绝（`DNS returned a non-public address`）。
+此类环境可手动下载归档后走本地归档入口，摘要与 descriptor 一致即可：
+
+```bash
+curl -L -o wls-repl.tgz <releases 中该版本的 tgz 地址>
+opencode extension install ./wls-repl.tgz \
+  --sha256 <stable.json 中的 artifact.sha256> --yes --enable
+```
 
 ## 独立打包与安装（自包含归档）
 
