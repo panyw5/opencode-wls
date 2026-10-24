@@ -64,6 +64,16 @@ OpenCode 扩展（`local.wls-repl`）：为 `.wls` 文件提供 Python REPL/pdb 
 暂停。断点打在多行语句内部、注释行或语句间空行上时，等效于停在下一个可执行语句前。
 `Step` = 执行当前语句后停在下一个顶层语句前。不支持 Step Into。
 
+## 安装（release 地址）
+
+opencode 构建需包含扩展系统（extensions 分支），本机需有 `wolframscript`：
+
+```bash
+opencode extension install https://raw.githubusercontent.com/panyw5/opencode-wls/main/stable.json --yes --allow-registry-upgrade --enable
+```
+
+`stable.json` 指向本仓库 [releases](https://github.com/panyw5/opencode-wls/releases) 中对应版本的归档及 SHA-256；首次从 release 源安装会把扩展 registry 原子升级到 v3（`--allow-registry-upgrade` 为人工声明旧进程已停机，不是机器证明；卸载不会降级）。
+
 ## 独立打包与安装（自包含归档）
 
 运行时零外部依赖：`dist/server.js` 只含 `node:*` 内建导入（kit/plugin 已内联打包），

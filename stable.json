@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "local.wls-repl",
+  "version": "1.18.58",
+  "artifact": {
+    "url": "https://github.com/panyw5/opencode-wls/releases/download/v1.18.58/opencode-ai-wls-repl-extension-1.18.58.tgz",
+    "sha256": "22d0d61f23f0e66dff9d8e01b42233a2475c5605f5f7c33dbfb1276760902432"
+  }
+}
